@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * {@link RestController} used by {@link WebMvcTestHateoasIntegrationTests}.
+ * {@link RestController @RestClientTest} used by
+ * {@link WebMvcTestHateoasIntegrationTests}.
  *
  * @author Andy Wilkinson
  */
@@ -35,8 +36,7 @@ class HateoasController {
 
 	@RequestMapping("/resource")
 	public EntityModel<Map<String, String>> resource() {
-		return new EntityModel<>(new HashMap<>(),
-				new Link("self", "http://api.example.com"));
+		return new EntityModel<>(new HashMap<>(), new Link("self", "https://api.example.com"));
 	}
 
 	@RequestMapping("/plain")

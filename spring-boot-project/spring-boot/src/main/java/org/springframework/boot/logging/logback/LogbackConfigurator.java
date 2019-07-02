@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2017 the original author or authors.
+ * Copyright 2012-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.pattern.Converter;
 import ch.qos.logback.core.spi.ContextAware;
 import ch.qos.logback.core.spi.LifeCycle;
-import ch.qos.logback.core.spi.PropertyContainer;
 
 import org.springframework.util.Assert;
 
@@ -36,7 +35,6 @@ import org.springframework.util.Assert;
  * Allows programmatic configuration of logback which is usually faster than parsing XML.
  *
  * @author Phillip Webb
- * @since 1.2.0
  */
 class LogbackConfigurator {
 
@@ -47,7 +45,7 @@ class LogbackConfigurator {
 		this.context = context;
 	}
 
-	public PropertyContainer getContext() {
+	public LoggerContext getContext() {
 		return this.context;
 	}
 
@@ -56,8 +54,7 @@ class LogbackConfigurator {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void conversionRule(String conversionWord,
-			Class<? extends Converter> converterClass) {
+	public void conversionRule(String conversionWord, Class<? extends Converter> converterClass) {
 		Assert.hasLength(conversionWord, "Conversion word must not be empty");
 		Assert.notNull(converterClass, "Converter class must not be null");
 		Map<String, String> registry = (Map<String, String>) this.context
@@ -82,8 +79,7 @@ class LogbackConfigurator {
 		logger(name, level, additive, null);
 	}
 
-	public void logger(String name, Level level, boolean additive,
-			Appender<ILoggingEvent> appender) {
+	public void logger(String name, Level level, boolean additive, Appender<ILoggingEvent> appender) {
 		Logger logger = this.context.getLogger(name);
 		if (level != null) {
 			logger.setLevel(level);

@@ -16,7 +16,7 @@
 
 package org.springframework.boot.actuate.autoconfigure.endpoint.web.documentation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.actuate.integration.IntegrationGraphEndpoint;
 import org.springframework.context.annotation.Bean;
@@ -35,19 +35,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Tim Ysewyn
  */
-public class IntegrationGraphEndpointDocumentationTests
-		extends MockMvcEndpointDocumentationTests {
+class IntegrationGraphEndpointDocumentationTests extends MockMvcEndpointDocumentationTests {
 
 	@Test
-	public void graph() throws Exception {
+	void graph() throws Exception {
 		this.mockMvc.perform(get("/actuator/integrationgraph")).andExpect(status().isOk())
 				.andDo(MockMvcRestDocumentation.document("integrationgraph/graph"));
 	}
 
 	@Test
-	public void rebuild() throws Exception {
-		this.mockMvc.perform(post("/actuator/integrationgraph"))
-				.andExpect(status().isNoContent())
+	void rebuild() throws Exception {
+		this.mockMvc.perform(post("/actuator/integrationgraph")).andExpect(status().isNoContent())
 				.andDo(MockMvcRestDocumentation.document("integrationgraph/rebuild"));
 	}
 
@@ -62,8 +60,7 @@ public class IntegrationGraphEndpointDocumentationTests
 		}
 
 		@Bean
-		public IntegrationGraphEndpoint endpoint(
-				IntegrationGraphServer integrationGraphServer) {
+		public IntegrationGraphEndpoint endpoint(IntegrationGraphServer integrationGraphServer) {
 			return new IntegrationGraphEndpoint(integrationGraphServer);
 		}
 

@@ -30,7 +30,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 /**
- * Web {@link Endpoint} that provides access to an application's log file.
+ * Web {@link Endpoint @Endpoint} that provides access to an application's log file.
  *
  * @author Johannes Edmeier
  * @author Phillip Webb
@@ -55,7 +55,7 @@ public class LogFileWebEndpoint {
 		this(environment, null);
 	}
 
-	@ReadOperation(produces = "text/plain")
+	@ReadOperation(produces = "text/plain; charset=UTF-8")
 	public Resource logFile() {
 		Resource logFileResource = getLogFileResource();
 		if (logFileResource == null || !logFileResource.isReadable()) {

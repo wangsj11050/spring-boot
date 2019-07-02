@@ -23,8 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.Filter;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
@@ -54,23 +54,22 @@ import static org.mockito.Mockito.mock;
  * @author Andy Wilkinson
  * @author Eddú Meléndez
  */
-public class FilterOrderingIntegrationTests {
+class FilterOrderingIntegrationTests {
 
 	private AnnotationConfigServletWebServerApplicationContext context;
 
-	@After
-	public void cleanup() {
+	@AfterEach
+	void cleanup() {
 		if (this.context != null) {
 			this.context.close();
 		}
 	}
 
 	@Test
-	public void testFilterOrdering() {
+	void testFilterOrdering() {
 		load();
-		List<RegisteredFilter> registeredFilters = this.context
-				.getBean(MockServletWebServerFactory.class).getWebServer()
-				.getRegisteredFilters();
+		List<RegisteredFilter> registeredFilters = this.context.getBean(MockServletWebServerFactory.class)
+				.getWebServer().getRegisteredFilters();
 		List<Filter> filters = new ArrayList<>(registeredFilters.size());
 		for (RegisteredFilter registeredFilter : registeredFilters) {
 			filters.add(registeredFilter.getFilter());
@@ -86,13 +85,10 @@ public class FilterOrderingIntegrationTests {
 
 	private void load() {
 		this.context = new AnnotationConfigServletWebServerApplicationContext();
-		this.context.register(MockWebServerConfiguration.class,
-				TestSessionConfiguration.class, TestRedisConfiguration.class,
-				WebMvcAutoConfiguration.class, SecurityAutoConfiguration.class,
-				SessionAutoConfiguration.class,
-				HttpMessageConvertersAutoConfiguration.class,
-				PropertyPlaceholderAutoConfiguration.class,
-				HttpEncodingAutoConfiguration.class);
+		this.context.register(MockWebServerConfiguration.class, TestSessionConfiguration.class,
+				TestRedisConfiguration.class, WebMvcAutoConfiguration.class, SecurityAutoConfiguration.class,
+				SessionAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class,
+				PropertyPlaceholderAutoConfiguration.class, HttpEncodingAutoConfiguration.class);
 		this.context.refresh();
 	}
 

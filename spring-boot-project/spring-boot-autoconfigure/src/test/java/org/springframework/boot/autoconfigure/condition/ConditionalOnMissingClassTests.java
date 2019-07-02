@@ -16,7 +16,7 @@
 
 package org.springframework.boot.autoconfigure.condition;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -25,16 +25,16 @@ import org.springframework.context.annotation.Configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tests for {@link ConditionalOnMissingClass}.
+ * Tests for {@link ConditionalOnMissingClass @ConditionalOnMissingClass}.
  *
  * @author Dave Syer
  */
-public class ConditionalOnMissingClassTests {
+class ConditionalOnMissingClassTests {
 
 	private final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 
 	@Test
-	public void testVanillaOnClassCondition() {
+	void testVanillaOnClassCondition() {
 		this.context.register(BasicConfiguration.class, FooConfiguration.class);
 		this.context.refresh();
 		assertThat(this.context.containsBean("bar")).isFalse();
@@ -42,7 +42,7 @@ public class ConditionalOnMissingClassTests {
 	}
 
 	@Test
-	public void testMissingOnClassCondition() {
+	void testMissingOnClassCondition() {
 		this.context.register(MissingConfiguration.class, FooConfiguration.class);
 		this.context.refresh();
 		assertThat(this.context.containsBean("bar")).isTrue();

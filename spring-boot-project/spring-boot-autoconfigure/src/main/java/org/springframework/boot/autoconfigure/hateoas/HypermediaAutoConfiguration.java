@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * {@link EnableAutoConfiguration Auto-configuration} for Spring HATEOAS's
- * {@link EnableHypermediaSupport}.
+ * {@link EnableHypermediaSupport @EnableHypermediaSupport}.
  *
  * @author Roy Clarkson
  * @author Oliver Gierke
@@ -52,8 +52,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @ConditionalOnClass({ EntityModel.class, RequestMapping.class, Plugin.class })
 @ConditionalOnWebApplication
 @AutoConfigureAfter({ WebMvcAutoConfiguration.class, JacksonAutoConfiguration.class,
-		HttpMessageConvertersAutoConfiguration.class,
-		RepositoryRestMvcAutoConfiguration.class })
+		HttpMessageConvertersAutoConfiguration.class, RepositoryRestMvcAutoConfiguration.class })
 @EnableConfigurationProperties(HateoasProperties.class)
 @Import(HypermediaHttpMessageConverterConfiguration.class)
 public class HypermediaAutoConfiguration {

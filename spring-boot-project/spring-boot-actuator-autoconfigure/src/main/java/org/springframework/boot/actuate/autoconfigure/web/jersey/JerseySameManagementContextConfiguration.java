@@ -31,10 +31,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 /**
- * {@link ManagementContextConfiguration} for Jersey infrastructure when the management
- * context is the same as the main application context.
+ * {@link ManagementContextConfiguration @ManagementContextConfiguration} for Jersey
+ * infrastructure when the management context is the same as the main application context.
  *
  * @author Madhura Bhave
+ * @since 2.1.0
  */
 @ManagementContextConfiguration(ManagementContextType.SAME)
 @ConditionalOnMissingBean(ResourceConfig.class)
@@ -47,8 +48,7 @@ public class JerseySameManagementContextConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean(JerseyApplicationPath.class)
-	public JerseyApplicationPath jerseyApplicationPath(JerseyProperties properties,
-			ResourceConfig config) {
+	public JerseyApplicationPath jerseyApplicationPath(JerseyProperties properties, ResourceConfig config) {
 		return new DefaultJerseyApplicationPath(properties.getApplicationPath(), config);
 	}
 

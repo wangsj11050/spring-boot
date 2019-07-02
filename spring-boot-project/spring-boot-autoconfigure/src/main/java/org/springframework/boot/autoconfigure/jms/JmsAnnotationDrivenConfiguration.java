@@ -38,7 +38,6 @@ import org.springframework.transaction.jta.JtaTransactionManager;
  *
  * @author Phillip Webb
  * @author Stephane Nicoll
- * @since 1.2.0
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(EnableJms.class)
@@ -52,10 +51,9 @@ class JmsAnnotationDrivenConfiguration {
 
 	private final JmsProperties properties;
 
-	JmsAnnotationDrivenConfiguration(
-			ObjectProvider<DestinationResolver> destinationResolver,
-			ObjectProvider<JtaTransactionManager> transactionManager,
-			ObjectProvider<MessageConverter> messageConverter, JmsProperties properties) {
+	JmsAnnotationDrivenConfiguration(ObjectProvider<DestinationResolver> destinationResolver,
+			ObjectProvider<JtaTransactionManager> transactionManager, ObjectProvider<MessageConverter> messageConverter,
+			JmsProperties properties) {
 		this.destinationResolver = destinationResolver;
 		this.transactionManager = transactionManager;
 		this.messageConverter = messageConverter;
@@ -77,8 +75,7 @@ class JmsAnnotationDrivenConfiguration {
 	@ConditionalOnSingleCandidate(ConnectionFactory.class)
 	@ConditionalOnMissingBean(name = "jmsListenerContainerFactory")
 	public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(
-			DefaultJmsListenerContainerFactoryConfigurer configurer,
-			ConnectionFactory connectionFactory) {
+			DefaultJmsListenerContainerFactoryConfigurer configurer, ConnectionFactory connectionFactory) {
 		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
 		configurer.configure(factory, connectionFactory);
 		return factory;

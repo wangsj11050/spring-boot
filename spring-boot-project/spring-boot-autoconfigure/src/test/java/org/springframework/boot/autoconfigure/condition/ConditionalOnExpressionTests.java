@@ -18,7 +18,7 @@ package org.springframework.boot.autoconfigure.condition;
 
 import java.util.Collections;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
@@ -32,44 +32,42 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 /**
- * Tests for {@link ConditionalOnExpression}.
+ * Tests for {@link ConditionalOnExpression @ConditionalOnExpression}.
  *
  * @author Dave Syer
  * @author Stephane Nicoll
  */
-public class ConditionalOnExpressionTests {
+class ConditionalOnExpressionTests {
 
 	private final ApplicationContextRunner contextRunner = new ApplicationContextRunner();
 
 	@Test
-	public void expressionIsTrue() {
+	void expressionIsTrue() {
 		this.contextRunner.withUserConfiguration(BasicConfiguration.class)
 				.run((context) -> assertThat(context.getBean("foo")).isEqualTo("foo"));
 	}
 
 	@Test
-	public void expressionEvaluatesToTrueRegistersBean() {
+	void expressionEvaluatesToTrueRegistersBean() {
 		this.contextRunner.withUserConfiguration(MissingConfiguration.class)
 				.run((context) -> assertThat(context).doesNotHaveBean("foo"));
 	}
 
 	@Test
-	public void expressionEvaluatesToFalseDoesNotRegisterBean() {
+	void expressionEvaluatesToFalseDoesNotRegisterBean() {
 		this.contextRunner.withUserConfiguration(NullConfiguration.class)
 				.run((context) -> assertThat(context).doesNotHaveBean("foo"));
 	}
 
 	@Test
-	public void expressionEvaluationWithNoBeanFactoryDoesNotMatch() {
+	void expressionEvaluationWithNoBeanFactoryDoesNotMatch() {
 		OnExpressionCondition condition = new OnExpressionCondition();
 		MockEnvironment environment = new MockEnvironment();
 		ConditionContext conditionContext = mock(ConditionContext.class);
 		given(conditionContext.getEnvironment()).willReturn(environment);
-		ConditionOutcome outcome = condition.getMatchOutcome(conditionContext,
-				mockMetaData("invalid-spel"));
+		ConditionOutcome outcome = condition.getMatchOutcome(conditionContext, mockMetaData("invalid-spel"));
 		assertThat(outcome.isMatch()).isFalse();
-		assertThat(outcome.getMessage()).contains("invalid-spel")
-				.contains("no BeanFactory available");
+		assertThat(outcome.getMessage()).contains("invalid-spel").contains("no BeanFactory available");
 	}
 
 	private AnnotatedTypeMetadata mockMetaData(String value) {

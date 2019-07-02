@@ -16,7 +16,7 @@
 
 package org.springframework.boot.autoconfigure.condition;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
 import org.springframework.boot.autoconfigure.web.reactive.MockReactiveWebServerFactory;
@@ -32,34 +32,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
 /**
- * Tests for {@link ConditionalOnNotWebApplication}.
+ * Tests for {@link ConditionalOnNotWebApplication @ConditionalOnNotWebApplication}.
  *
  * @author Dave Syer
  * @author Stephane Nicoll
  */
-public class ConditionalOnNotWebApplicationTests {
+class ConditionalOnNotWebApplicationTests {
 
 	@Test
-	public void testNotWebApplicationWithServletContext() {
-		new WebApplicationContextRunner()
-				.withUserConfiguration(NotWebApplicationConfiguration.class)
+	void testNotWebApplicationWithServletContext() {
+		new WebApplicationContextRunner().withUserConfiguration(NotWebApplicationConfiguration.class)
 				.run((context) -> assertThat(context).doesNotHaveBean(String.class));
 	}
 
 	@Test
-	public void testNotWebApplicationWithReactiveContext() {
+	void testNotWebApplicationWithReactiveContext() {
 		new ReactiveWebApplicationContextRunner()
-				.withUserConfiguration(ReactiveApplicationConfig.class,
-						NotWebApplicationConfiguration.class)
+				.withUserConfiguration(ReactiveApplicationConfig.class, NotWebApplicationConfiguration.class)
 				.run((context) -> assertThat(context).doesNotHaveBean(String.class));
 	}
 
 	@Test
-	public void testNotWebApplication() {
-		new ApplicationContextRunner()
-				.withUserConfiguration(NotWebApplicationConfiguration.class)
-				.run((context) -> assertThat(context).getBeans(String.class)
-						.containsExactly(entry("none", "none")));
+	void testNotWebApplication() {
+		new ApplicationContextRunner().withUserConfiguration(NotWebApplicationConfiguration.class)
+				.run((context) -> assertThat(context).getBeans(String.class).containsExactly(entry("none", "none")));
 	}
 
 	@Configuration(proxyBeanMethods = false)
